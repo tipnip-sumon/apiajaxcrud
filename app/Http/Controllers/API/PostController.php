@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseController;
-use Illuminate\Support\Facades\Auth;
 
 
 class PostController extends BaseController
@@ -17,7 +18,7 @@ class PostController extends BaseController
     public function index()
     {
         
-       $data['posts'] = Post::orderByDesc('id')->get();;
+       $data['posts'] = Post::with('user')->orderByDesc('id')->get();;
        return $this->sendResponse($data,"Data fetch successfully");
     }
 
@@ -42,12 +43,12 @@ class PostController extends BaseController
             $imageName = time() . "." . $ext;
             $image->move(public_path().'/uploads',$imageName);
             
-            $post = Post::create([
-                'title'=>$request->title,
-                'user_id'=>Auth::id(),
+			$user = User::find(Auth::id());
+			$post = $user->posts()->create([
+				'title'=>$request->title,
                 'description'=>$request->description,
                 'image'=>$imageName
-            ]);
+			]);
             return $this->sendResponse($post,'Post Data Successfully');
     }
 
