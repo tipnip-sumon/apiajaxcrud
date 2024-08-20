@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\API\BaseController;
+use Illuminate\Support\Facades\Auth;
 
 
 class PostController extends BaseController
@@ -43,6 +44,7 @@ class PostController extends BaseController
             
             $post = Post::create([
                 'title'=>$request->title,
+                'user_id'=>Auth::id(),
                 'description'=>$request->description,
                 'image'=>$imageName
             ]);

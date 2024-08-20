@@ -14,3 +14,4 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('logout',[AuthController::class,'logout']);
     Route::apiResource('posts',PostController::class);
 });
+// Route::apiResource('posts',PostController::class)->middleware('can:update');
