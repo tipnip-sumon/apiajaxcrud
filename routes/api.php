@@ -15,3 +15,4 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::apiResource('posts',PostController::class);
 });
 // Route::apiResource('posts',PostController::class)->middleware('can:update');
+// Route::apiResource('posts',PostController::class)->middleware('can:update');
